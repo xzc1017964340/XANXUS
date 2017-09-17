@@ -1,0 +1,217 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include <time.h>
+
+#define N 10
+int Score;                                                      //设置正确数
+
+
+void Integer(){
+	int i;
+	int a, b, k,d;
+	for (i = 0; i<N; i++)
+	{                                                                         //随机选取运算整数
+		a = rand() % 100 + 1;
+		b = rand() % 100 + 1;
+		k = rand() % 4 + 1;
+		printf("%d", a);
+		switch (k)
+		{
+		case 1:
+		{                                                                //整数相加
+			printf(" + %d = ",b);
+			scanf_s("%d", &d);
+			if (d == (a + b)){
+				printf("\t\t\t\t√\n");
+				Score++;
+			}
+			else{
+				printf("\t\t\t\t×\n");
+			}
+		} 
+		break;
+		case 2:
+		{                                                                //整数相减
+			printf(" - %d = ",b);
+			scanf_s("%d", &d);
+			if (d == (a - b)){
+				printf("\t\t\t\t√\n");
+				Score++;
+			}
+			else{
+				printf("\t\t\t\t×\n");			}
+		} 
+		break;
+		case 3:{                                                        //整数相乘
+			printf(" × %d = ", b);
+			scanf_s("%d", &d);
+			if (d == (a * b)){
+				printf("\t\t\t\t√\n");
+				Score++;
+			}
+			else{
+				printf("\t\t\t\t×\n");
+			}
+		}
+		break;
+		case 4:{                                                         //整数相除
+			printf(" ÷ %d = ", b);
+			scanf_s("%d", &d);
+			if (d == (a / b)){
+				printf("\t\t\t\t√\n");
+				Score++;
+			}
+			else{
+				printf("\t\t\t\t×\n");
+			}
+		} break;
+		}
+	}
+}
+
+void Decimal(){
+	int i,k;
+	float a, b, d;
+	for (i = 0; i<N; i++)
+	{                                                                      //随机产生小数运算数
+		a = (float)(rand()*0.01 + 1);
+		b = (float)(rand()*0.01 + 1);
+		k = rand() % 4 + 1;
+		printf("%0.2f", a);
+		switch (k)
+		{                                                           //小数相加
+			case 1:
+		{
+			printf(" + %0.2f = ", b);
+			scanf_s("%f", &d);
+			if (d == (a + b)){
+				printf("\t\t\t\t√\n");
+				Score++;
+			}
+			else{
+				printf("\t\t\t\t×\n");
+			}
+		}
+		break;
+		case 2:
+		{                                                        //小数相减
+			printf(" - %0.2f = ", b);
+			scanf_s("%f", &d);
+			if (d == (a - b)){
+				printf("\t\t\t\t√\n");
+				Score++;
+			}
+			else{
+				printf("\t\t\t\t×\n");
+			}
+		}
+		break;
+		case 3:{                                                  //小数相乘
+			printf(" × %0.2f = ", b);
+			scanf_s("%f", &d);
+			if (d == ((float)(((int)(((a *b) * 100) + 0.5))) / 100)){   //将生成的a,b相乘并取两位小数（+0.5起四舍五入的作用），再与输入的结果d作比较
+				printf("\t\t\t\t√\n");
+				Score++;
+			}
+			else{
+				printf("\t\t\t\t×\n");
+			}
+		}
+			   break;
+		case 4:{                                                                         //小数相除
+			printf(" ÷ %0.2f = ", b);
+			scanf_s("%f", &d);
+			if (d == ((float)(((int)(((a / b)*100)+0.5)))/100)){                    //将生成的a,b相除并取两位小数（+0.5起四舍五入的作用），再与输入的结果d作比较
+				printf("\t\t\t\t√\n");
+				Score++;
+			}
+			else{
+				printf("\t\t\t\t×\n");
+			}
+		} break;
+		}
+	}
+}
+void main()
+{
+	int  n;
+	srand((unsigned)time(NULL));
+	do{
+		printf("\n请输入数字类型( 1.整数(保留整数) 2.小数（保留两位小数）) -1为退出程序: ");
+		scanf_s("%d", &n);
+		switch (n)
+		{
+			case 1:
+			Integer();
+			break;
+			case 2:
+			Decimal();
+			break;
+		}
+	} while (n != -1);
+	printf("本次答题共做对%d个\n", Score);
+	system("pause");
+}
+
+
+
+以下为博主15吕日荣的初代码：
+#include<stdio.h>
+#include<stdlib.h>
+#include <time.h>
+#define N 30
+main()
+{
+int a,b,k,i,n;
+float c,d;
+srand(time(NULL));
+do{
+printf("\n请输入数字类型(1.整数 2.小数) -1为退出程序: ");
+scanf("%d",&n);
+
+switch(n)
+{
+case 1:
+{
+
+for(i=0;i<N;i++)
+{
+a=rand()%100+1;
+b=rand()%100+1;
+k=rand()%4+1;
+printf("%d",a);
+switch(k)
+{
+case 1:printf("+");break;
+case 2:printf("-");break;
+case 3:printf("*");break;
+case 4:printf("/");break;
+}
+printf("%d=\t\t",b);
+}
+break;
+}
+break;
+case 2:
+{
+for(i=0;i<N;i++)
+{
+c=rand()*0.001+1;
+d=rand()*0.001+1;
+k=rand()%4+1;
+printf("%0.2f",c);
+switch(k)
+{
+case 1:printf("+");break;
+case 2:printf("-");break;
+case 3:printf("*");break;
+case 4:printf("/");break;
+}
+printf("%0.2f=\t",d);
+}
+break;
+}
+break;
+}
+}while(n!=-1);
+}
