@@ -1,0 +1,118 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+void CharCount(FILE *arg);
+void WordCount(FILE *arg);
+void LineCount(FILE *arg);
+
+int characterNum = 0;
+int wordNum = 0;
+int lineNum = 0;
+
+void main()
+{
+	char filename[20];
+	char a;
+    FILE *fp;
+	printf("文件名：");
+	gets_s(filename);
+	fp = fopen(filename, "r");
+	if (fp == NULL)
+	{
+		printf("Can't open file\n");
+		getchar();
+		exit(1);
+	}
+	
+	while (1)
+	{
+		printf("-q\t退出\n");
+		printf("统计功能 \n字符数 -c;\t单词数 -w\t;行数 -l\n -");
+		scanf("%c", &a);
+
+		switch (a)
+		{
+		 case 'c':
+			CharCount(fp);
+			break;
+		 case 'w':
+			WordCount(fp);
+			break;
+		 case 'l':
+			LineCount(fp);
+			break;
+		 case 'q':
+		{
+			fclose(fp);
+		    exit(1);
+		}
+		 default:
+			printf("请输入正确的指令：\n");
+			break;
+		}
+
+	}
+	
+	system("pause");
+}
+
+void CharCount(FILE *arg)
+{
+	char ch;
+	rewind(arg);                                //文件内指针移至文件头
+	ch = fgetc(arg);
+	while (!feof(arg))
+	{
+		//if ((ch > ='a'&&ch<='z') || (ch>='A'&&ch < ='Z' ))        //若只统计英文字母则用此句
+		//{
+			characterNum++;              //能输入计算机的都是字符
+		//}
+		ch = fgetc(arg);
+	}
+	printf("字符数：%d\n", characterNum);
+
+}
+
+void WordCount(FILE *arg)
+{
+	char ch1;
+	char ch2;
+	rewind(arg);
+	ch1 = fgetc(arg);
+	while (!feof(arg))
+	{
+		ch2 = ch1;
+		ch1 = fgetc(arg);               
+		/*
+		    从文件中获取两个字符，ch1在前ch2在后，如果ch2是英文字母而ch1不是则单词数加一；依次遍历文件
+		*/
+		if (((ch2 >='A'&&ch2<='Z')||(ch2>='a'&&ch2<='z') )&&((ch1<='A'||ch1>='Z')&&(ch1<='a'||ch1>='z')))
+		{
+			wordNum++;
+		}
+	}
+	if (((ch1 >='a'&&ch1<='z') || (ch1 >= 'A'&&ch1<= 'Z')) && ((ch2>='a'&&ch2<='z') || (ch2>='A'&&ch2 <= 'Z')))
+		wordNum++;                             //如果文件最后一位字符是英文字母，则单词数加一
+	printf("单词数：%d\n", wordNum);
+	return;
+}
+
+void LineCount(FILE *arg)
+{
+	char ch;
+	rewind(arg);
+	ch = fgetc(arg);
+	while (!feof(arg))                          //如果遇到换行符则lineNum加一
+	{
+		if (ch == '\n')
+			lineNum++;
+		ch = fgetc(arg);
+	}
+	if (ch == -1)                      //如果最后一个字符是EOF（-1），则lineNum加一
+		lineNum++;
+	printf("行数：%d\n", lineNum);
+	return;
+}
+
+ 
